@@ -1,25 +1,19 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model()
-export class Users extends Entity {
-  @property({
-    type: 'string',
-    required: true,
-  })
-  name: string;
-
+@model({settings: {strict: false}})
+export class User extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  id?: number;
+  user_id?: number;
 
   @property({
     type: 'string',
     required: true,
   })
-  lastname: string;
+  name: string;
 
   @property({
     type: 'string',
@@ -31,40 +25,44 @@ export class Users extends Entity {
     type: 'string',
     required: true,
   })
-  phone: string;
+  phone_number: string;
+
+  @property({
+    type: 'number',
+  })
+  rating?: number;
 
   @property({
     type: 'string',
     required: true,
   })
-  address: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  password: string;
+  role: string;
 
   @property({
     type: 'boolean',
     required: true,
   })
-  state: boolean;
+  status: boolean;
 
   @property({
-    type: 'object',
+    type: 'date',
     required: true,
   })
-  role: object;
+  created_at: string;
 
+  // Define well-known properties here
 
-  constructor(data?: Partial<Users>) {
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
+
+  constructor(data?: Partial<User>) {
     super(data);
   }
 }
 
-export interface UsersRelations {
+export interface UserRelations {
   // describe navigational properties here
 }
 
-export type UsersWithRelations = Users & UsersRelations;
+export type UserWithRelations = User & UserRelations;

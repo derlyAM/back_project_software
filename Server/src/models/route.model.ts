@@ -1,37 +1,55 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Review extends Entity {
+export class Route extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  review_id?: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  user_id: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  route_id: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  rating: number;
+  route_id?: number;
 
   @property({
     type: 'string',
     required: true,
   })
-  comment: string;
+  origin: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  destination: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  departure_time: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  available_seats: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  price: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  driver_id: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  vehicle_id: number;
 
   @property({
     type: 'date',
@@ -45,13 +63,13 @@ export class Review extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Review>) {
+  constructor(data?: Partial<Route>) {
     super(data);
   }
 }
 
-export interface ReviewRelations {
+export interface RouteRelations {
   // describe navigational properties here
 }
 
-export type ReviewWithRelations = Review & ReviewRelations;
+export type RouteWithRelations = Route & RouteRelations;

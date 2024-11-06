@@ -1,13 +1,13 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Review extends Entity {
+export class Vehicle extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  review_id?: number;
+  vehicle_id?: number;
 
   @property({
     type: 'number',
@@ -16,28 +16,34 @@ export class Review extends Entity {
   user_id: number;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  route_id: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  rating: number;
+  type: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  comment: string;
+  license_plate: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
-  created_at: string;
+  color: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  model: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  year: number;
 
   // Define well-known properties here
 
@@ -45,13 +51,13 @@ export class Review extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Review>) {
+  constructor(data?: Partial<Vehicle>) {
     super(data);
   }
 }
 
-export interface ReviewRelations {
+export interface VehicleRelations {
   // describe navigational properties here
 }
 
-export type ReviewWithRelations = Review & ReviewRelations;
+export type VehicleWithRelations = Vehicle & VehicleRelations;
