@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model({settings: {strict: false}})
 export class Route extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  route_id?: number;
+  route_id?: string;
 
   @property({
     type: 'string',
@@ -40,16 +40,16 @@ export class Route extends Entity {
   price: number;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  driver_id: number;
+  driver_id: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  vehicle_id: number;
+  vehicle_id: string;
 
   @property({
     type: 'date',

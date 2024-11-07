@@ -3,17 +3,17 @@ import {Entity, model, property} from '@loopback/repository';
 @model({settings: {strict: false}})
 export class Vehicle extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  vehicle_id?: number;
+  vehicle_id?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  user_id: number;
+  user_id: string;
 
   @property({
     type: 'string',

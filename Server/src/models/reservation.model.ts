@@ -3,23 +3,23 @@ import {Entity, model, property} from '@loopback/repository';
 @model({settings: {strict: false}})
 export class Reservation extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  reservation_id?: number;
+  reservation_id?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  user_id: number;
+  user_id: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  route_id: number;
+  route_id: string;
 
   @property({
     type: 'date',
