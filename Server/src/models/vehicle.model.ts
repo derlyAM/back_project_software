@@ -64,6 +64,7 @@ export class Vehicle extends Entity {
     this.validateRequired('model', this.model, 'El modelo es obligatorio.');
     this.validateRequired('year', this.year, 'El año es obligatorio.');
     this.validateType('type', this.type, 'El tipo debe ser carro o moto');
+    this.validateCarPlateFormat(this.license_plate, "La placa debe ser válida")
   }
 
   private validateRequired(fieldName: string, value: any, errorMessage: string) {
@@ -76,6 +77,13 @@ export class Vehicle extends Entity {
       throw new HttpErrors.UnprocessableEntity(errorMessage);
     }
   }
+  private validateCarPlateFormat(plate: string, errorMessage: string) {
+    const plateRegex = /^[A-Z]{3}\d{3}$|^[A-Z]{3}\d{2}[A-Z]$/;
+    if (!plateRegex.test(plate)) {
+      throw new HttpErrors.UnprocessableEntity(errorMessage);
+    }
+  }
+  
 
 }
 
