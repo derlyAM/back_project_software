@@ -41,7 +41,6 @@ export class Route extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
   driver_id: string;
 
@@ -53,7 +52,7 @@ export class Route extends Entity {
 
   @property({
     type: 'date',
-    required: true,
+    defaultFn: 'now',
   })
   created_at: string;
 
