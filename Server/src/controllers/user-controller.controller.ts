@@ -44,6 +44,7 @@ export class UserControllerController {
     })
     user: User,
   ): Promise<User> {
+    
     return this.userRepository.create(user);
   }
 
