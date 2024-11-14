@@ -77,6 +77,8 @@ export class Route extends Entity {
     this.validateRequired('vehicle_id', this.vehicle_id, 'El id del vehículo es obligatorio.');
     this.validateTime();
     this.validateOriginAndDestination(this.origin, this.destination)
+    this.validateSeats();
+    this.validatePrice();
   }
   private validateRequired(fieldName: string, value: any, errorMessage: string) {
     if (!value) {
@@ -93,6 +95,18 @@ export class Route extends Entity {
   private validateOriginAndDestination(origin: string, destination: string) {
     if (origin != "Sede central U de Caldas" && destination != "Sede central U de Caldas") {
       throw new HttpErrors.UnprocessableEntity("Origen o destino deben ser en la Sede central U de Caldas");
+    }
+  }
+
+  private validateSeats() {
+    if (this.available_seats < 1) {
+      throw new HttpErrors.UnprocessableEntity("Debe haber al menos un asiento disponible");
+    }
+  }
+
+  private validatePrice() {
+    if (this.price > 10000 ||this.price < 0 ) {
+      throw new HttpErrors.UnprocessableEntity("El costo debe estar entre 0 y 10000 COP");
     }
   }
 
