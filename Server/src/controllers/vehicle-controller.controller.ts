@@ -26,6 +26,32 @@ export class VehicleControllerController {
     public vehicleRepository : VehicleRepository,
   ) {}
 
+
+    // Método para obtener vehículos por user_id
+    @get('/vehicles/users/{user_id}', {
+      responses: {
+        '200': {
+          description: 'Array of Vehicles belonging to a user',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'array',
+                items: {'x-ts-type': Vehicle},
+              },
+            },
+          },
+        },
+      },
+    })
+    async getVehiclesByUser(
+      @param.path.string('user_id') userId: string,
+    ): Promise<Vehicle[]> {
+      // Realiza una consulta para encontrar los vehículos por user_id
+      return this.vehicleRepository.find({
+        where: {user_id: userId},
+      });
+    }  
+
   @post('/vehicles')
   @response(200, {
     description: 'Vehicle model instance',
