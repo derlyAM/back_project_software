@@ -69,12 +69,12 @@ export class Route extends Entity {
   }
 
   private validate() {
-    this.validateRequired('origin', this.origin, 'El origen es obligatorio.');
-    this.validateRequired('destination', this.destination, 'El destino es obligatorio.');
-    this.validateRequired('departure_time', this.departure_time, 'La hora de salida es obligatoria.');
-    this.validateRequired('available_seats', this.available_seats, 'El número de asientos disponibles es obligatorio.');
-    this.validateRequired('price', this.price, 'El precio es obligatorio.');
-    this.validateRequired('vehicle_id', this.vehicle_id, 'El id del vehículo es obligatorio.');
+    this.validateRequired('origin', this.origin, 'Todos los campos son obligatorios');
+    this.validateRequired('destination', this.destination, 'Todos los campos son obligatorios');
+    this.validateRequired('departure_time', this.departure_time, 'Todos los campos son obligatorios');
+    this.validateRequired('available_seats', this.available_seats, 'Todos los campos son obligatorios');
+    this.validateRequired('price', this.price, 'Todos los campos son obligatorios');
+    this.validateRequired('vehicle_id', this.vehicle_id, 'Todos los campos son obligatorios');
     this.validateTime();
     this.validateOriginAndDestination(this.origin, this.destination)
     this.validateSeats();
@@ -113,9 +113,8 @@ export class Route extends Entity {
   private validateTime() {
     const currentTime = new Date();
     const departureTime = new Date(this.departure_time);
-    console.log(currentTime);
     // Verificar que la hora de salida sea al menos una hora mayor que la hora actual
-    currentTime.setHours(currentTime.getHours() + 1);
+    currentTime.setHours(currentTime.getHours() + 6);
     if (departureTime <= currentTime) {
       throw new HttpErrors.UnprocessableEntity(
         'La hora de salida debe ser al menos una hora mayor que la hora actual.',
