@@ -79,6 +79,8 @@ export class Route extends Entity {
     this.validateOriginAndDestination(this.origin, this.destination)
     this.validateSeats();
     this.validatePrice();
+    this.validateMinLength(this.origin,4,"El campo debe tener mínimo 4 caracteres");
+    this.validateMinLength(this.destination,4,"El campo debe tener mínimo 4 caracteres");
   }
   private validateRequired(fieldName: string, value: any, errorMessage: string) {
     if (!value) {
@@ -121,8 +123,8 @@ export class Route extends Entity {
       );
     }
      // Validar que la hora de salida esté entre las 4 a.m. y las 11 p.m.
-     const departureHours = departureTime.getHours();
-     if (departureHours < 4 || departureHours > 23) {
+     const departureHours = departureTime.getHours() + 5;
+     if (departureHours < 4 || departureHours >= 23) {
        throw new HttpErrors.UnprocessableEntity(
          'La hora de salida debe estar entre las 4 a.m. y las 11 p.m.',
        );
