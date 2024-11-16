@@ -16,12 +16,15 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
-import {Route} from '../models';
-import {RouteRepository} from '../repositories';
+import {Route, Vehicle} from '../models';
+import {RouteRepository, VehicleRepository} from '../repositories';
 
 export class RouteControllerController {
   constructor(
+    @repository(VehicleRepository)
+    public vehicleRepository: VehicleRepository,
     @repository(RouteRepository)
     public routeRepository : RouteRepository,
   ) {}
@@ -44,7 +47,17 @@ export class RouteControllerController {
     })
     route: Route,
   ): Promise<Route> {
-    return this.routeRepository.create(route);
+    const vehicle = await this.vehicleRepository.findById(route.vehicle_id);
+    if(vehicle){
+      if (vehicle.type == "moto" && route.available_seats > 1) {
+        throw new HttpErrors.BadRequest(`El cupo máximo para motos es uno`);
+      }
+      if (vehicle.type == "carro" && route.available_seats > 4) {
+        throw new HttpErrors.BadRequest(`El cupo para carros debe ser entre uno y cuatro`);
+      }
+      return this.routeRepository.create(route);
+    }
+    throw new HttpErrors.UnprocessableEntity("El vehículo no existe");
   }
 
   @get('/routes/count')

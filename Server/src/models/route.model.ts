@@ -81,6 +81,7 @@ export class Route extends Entity {
     this.validatePrice();
     this.validateMinLength(this.origin,4,"El campo debe tener mínimo 4 caracteres");
     this.validateMinLength(this.destination,4,"El campo debe tener mínimo 4 caracteres");
+    this.validateDouble();
   }
   private validateRequired(fieldName: string, value: any, errorMessage: string) {
     if (!value) {
@@ -110,6 +111,13 @@ export class Route extends Entity {
     if (this.price > 10000 ||this.price < 0 ) {
       throw new HttpErrors.UnprocessableEntity("El costo debe estar entre 0 y 10000 COP");
     }
+  }
+
+  private validateDouble(){
+    if(!Number.isNaN(this.price) && !Number.isInteger(this.price)){
+      throw new HttpErrors.UnprocessableEntity("El costo debe estar entre 0,10000 COP y debe ser entero");
+    }
+    
   }
 
   private validateTime() {
