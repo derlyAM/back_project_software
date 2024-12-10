@@ -40,7 +40,7 @@ export class RouteControllerController {
         'application/json': {
           schema: getModelSchemaRef(Route, {
             title: 'NewRoute',
-            
+
           }),
         },
       },
@@ -86,6 +86,32 @@ export class RouteControllerController {
   async find(
     @param.filter(Route) filter?: Filter<Route>,
   ): Promise<Route[]> {
+    return this.routeRepository.find(filter);
+  }
+
+  @get('/routes/filter')
+  @response(200, {
+    description: 'Filter routes by origin and destination',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Route, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async findFilteredRoutes(
+    @param.query.string('origin') origin?: string,
+    @param.query.string('destination') destination?: string,
+  ): Promise<Route[]> {
+    const filter: Filter<Route> = {
+      where: {
+        ...(origin && {origin}),
+        ...(destination && {destination}),
+      },
+    };
+
     return this.routeRepository.find(filter);
   }
 
