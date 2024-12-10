@@ -105,14 +105,16 @@ export class RouteControllerController {
     @param.query.string('origin') origin?: string,
     @param.query.string('destination') destination?: string,
   ): Promise<Route[]> {
-    const filter: Filter<Route> = {
-      where: {
-        ...(origin && {origin}),
-        ...(destination && {destination}),
-      },
-    };
+    const where = {};
 
-    return this.routeRepository.find(filter);
+    if (origin) {
+      Object.assign(where, {origin});
+    }
+    if (destination) {
+      Object.assign(where, {destination});
+    }
+
+    return this.routeRepository.find({where});
   }
 
   @patch('/routes')
@@ -185,5 +187,13 @@ export class RouteControllerController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.routeRepository.deleteById(id);
+  }
+
+  @del('/routes')
+  @response(204, {
+    description: 'All Routes DELETE success',
+  })
+  async deleteAll(): Promise<void> {
+    await this.routeRepository.deleteAll();
   }
 }
