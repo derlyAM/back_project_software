@@ -18,7 +18,7 @@ import {
   response,
   HttpErrors,
 } from '@loopback/rest';
-import {Route, Vehicle} from '../models';
+import {Route} from '../models';
 import {RouteRepository, VehicleRepository} from '../repositories';
 
 export class RouteControllerController {
